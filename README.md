@@ -79,43 +79,6 @@ Under **Einstellungen → CANITY**, the detail view can be embedded locally. The
 
 ## During development
 
-### Local CANITY backend (`wp-config.php`)
-
-The plugin uses production URLs by default. For local development against a backend on `localhost`, add two lines to your **WordPress installation's `wp-config.php`** — **not** the plugin repo.
-
-**Where is the file?**
-
-`wp-config.php` belongs to the WordPress site, not the plugin. With LocalWP it lives at:
-
-```
-~/Local Sites/<your-site-name>/app/public/wp-config.php
-```
-
-Example (site `canity-plugin-test`):
-
-```
-/Users/<your-username>/Local Sites/canity-plugin-test/app/public/wp-config.php
-```
-
-**Fastest way to find it:**
-
-1. Open the **LocalWP** app
-2. Right-click your site (e.g. `canity-plugin-test`)
-3. Choose **Reveal in Finder**
-4. Go to `app/public/`
-5. Open `wp-config.php` (not `wp-config-sample.php`)
-
-Alternatively in LocalWP: select the site → **Database** tab → **Open site shell** → then `open app/public/wp-config.php` (macOS) or open the path in your editor.
-
-**What to add?**
-
-Insert these lines **before** `/* That's all, stop editing! Happy publishing. */`:
-
-```php
-define( 'CANITY_API_BASE', '<local-url>' );
-define( 'CANITY_PUBLIC_BASE', '<local-url>' );
-```
-
 ### Flush cache
 
 API responses are cached for 15 minutes. Use **Cache jetzt leeren** under *Einstellungen → CANITY*, or temporarily lower the TTL in [canity/includes/class-canity-api.php](canity/includes/class-canity-api.php).
