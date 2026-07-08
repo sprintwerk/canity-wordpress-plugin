@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       CANITY
- * Plugin URI:        https://canity.de
+ * Plugin URI:        https://github.com/sprintwerk/canity-wordpress-plugin
  * Description:       Display services, events, and packages from the CANITY Partner API using a shortcode or Gutenberg block in WordPress.
  * Version:           1.0.0
  * Requires at least: 6.0
