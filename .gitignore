@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build output / packaged plugin
+*.zip
+/build/
+/dist/
+
+# Tooling caches & logs
+.phpunit.result.cache
+*.log
+.cache/
+
+# Environment / local config
+.env
+.env.*
+!.env.example

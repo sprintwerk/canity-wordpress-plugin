@@ -1,0 +1,89 @@
+.canity-settings-token {
+	max-width: 36rem;
+}
+
+.canity-settings-token__current {
+	margin: 0 0 1.25rem;
+	padding: 0.75rem 1rem;
+	border: 1px solid #c3c4c7;
+	border-left: 4px solid #2271b1;
+	background: #f6f7f7;
+}
+
+.canity-settings-token__heading {
+	margin: 0 0 0.5rem;
+	font-weight: 600;
+}
+
+.canity-settings-token__value {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin: 0 0 0.35rem;
+}
+
+.canity-settings-token__value code {
+	font-size: 13px;
+}
+
+.canity-settings-token__value .dashicons-lock {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+	color: #646970;
+}
+
+.canity-settings-token__business {
+	margin: 0.75rem 0 0;
+	padding-top: 0.75rem;
+	border-top: 1px solid #dcdcde;
+}
+
+.canity-settings-token__business-label {
+	display: block;
+	margin-bottom: 0.25rem;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+	color: #646970;
+}
+
+.canity-settings-token__business-name {
+	display: block;
+	margin-bottom: 0.15rem;
+	font-size: 14px;
+}
+
+.canity-settings-token__business-slug code {
+	font-size: 12px;
+}
+
+.canity-settings-token__replace-label {
+	display: block;
+	margin-bottom: 0.35rem;
+	font-weight: 600;
+}
+
+.canity-settings-token__replace-hint {
+	margin-top: 0 !important;
+	margin-bottom: 0.5rem !important;
+}
+
+.canity-settings-token__row {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.canity-settings-token__row .regular-text {
+	flex: 1 1 16rem;
+	min-width: 12rem;
+	max-width: 100%;
+	margin: 0;
+}
+
+.canity-settings-token__row .button {
+	margin: 0;
+	flex-shrink: 0;
+}

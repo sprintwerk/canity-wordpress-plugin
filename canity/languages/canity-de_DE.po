@@ -1,0 +1,446 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CANITY 1.0.0\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "%1$s – %2$s"
+msgstr "%1$s – %2$s Uhr"
+
+msgid "%d day(s) before start"
+msgstr "%d Tag(e) vor Beginn"
+
+msgid "%d min"
+msgstr "%d min"
+
+msgid "* incl. VAT"
+msgstr "* Inkl. MwSt."
+
+msgid "API access"
+msgstr "API-Zugang"
+
+msgid "API connection"
+msgstr "API-Verbindung"
+
+msgid "API responses are cached for 15 minutes. Clear the cache if you want CANITY changes to appear on your site immediately."
+msgstr "API-Antworten werden 15 Minuten zwischengespeichert. Leere den Cache, wenn du Änderungen in CANITY sofort auf deiner Seite sehen möchtest."
+
+msgid "Add the [canity_detail] shortcode to the selected page."
+msgstr "Lege auf der gewählten Seite den Shortcode [canity_detail] ein."
+
+msgid "Additional dates"
+msgstr "Weitere Termine"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Appearance"
+msgstr "Darstellung"
+
+msgid "Apr."
+msgstr "Apr."
+
+msgid "April"
+msgstr "April"
+
+msgid "Aug."
+msgstr "Aug."
+
+msgid "August"
+msgstr "August"
+
+msgid "Book"
+msgstr "Buchen"
+
+msgid "Buy"
+msgstr "Kaufen"
+
+msgid "CANITY"
+msgstr "CANITY"
+
+msgid "CANITY Detail"
+msgstr "CANITY Detail"
+
+msgid "CANITY List"
+msgstr "CANITY Liste"
+
+msgid "CANITY design"
+msgstr "CANITY-Design"
+
+msgid "CANITY settings"
+msgstr "CANITY Einstellungen"
+
+msgid "CANITY shortcode: the \"type\" attribute is missing or invalid. Allowed: %s."
+msgstr "CANITY-Shortcode: Attribut \"type\" fehlt oder ist ungültig. Erlaubt: %s."
+
+msgid "Cache"
+msgstr "Cache"
+
+msgid "Cancellation policy"
+msgstr "Stornobedingungen"
+
+msgid "Cancellation policy and terms & conditions"
+msgstr "Stornobedingungen und AGB"
+
+msgid "Clear cache now"
+msgstr "Cache jetzt leeren"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "Connect your WordPress site to your CANITY business using a Partner API token."
+msgstr "Verbinde deine WordPress-Seite per Partner API Token mit deinem CANITY-Business."
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Control whether the bundled CANITY design is loaded on your website."
+msgstr "Steuere, ob das mitgelieferte CANITY-Design auf deiner Website geladen wird."
+
+msgid "Count (0 = all)"
+msgstr "Anzahl (0 = alle)"
+
+msgid "Create the token in CANITY under My Business → Partner API. It is shown only once."
+msgstr "Erstelle den Token in CANITY unter Mein Business → Partner API. Er wird nur einmal angezeigt."
+
+msgid "Currently used token"
+msgstr "Aktuell verwendeter Token"
+
+msgid "Dates & location"
+msgstr "Termine & Ort"
+
+msgid "Dec."
+msgstr "Dez."
+
+msgid "December"
+msgstr "Dezember"
+
+msgid "Dedicated page"
+msgstr "Eigene Seite"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Detail page"
+msgstr "Detailseite"
+
+msgid "Detail view"
+msgstr "Detailansicht"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Details could not be loaded."
+msgstr "Details konnten nicht geladen werden."
+
+msgid "Dialog"
+msgstr "Dialog"
+
+msgid "Dialog (modal)"
+msgstr "Dialog (Modal)"
+
+msgid "Disable this option to skip loading the bundled CANITY CSS. The HTML structure with classes like .canity-grid and .canity-card remains so you can style it with your theme CSS."
+msgstr "Deaktiviere diese Option, um das mitgelieferte CANITY-CSS nicht zu laden. Die HTML-Struktur mit Klassen wie .canity-grid und .canity-card bleibt erhalten, damit du die Darstellung mit eigenem Theme-CSS anpassen kannst."
+
+msgid "Display mode"
+msgstr "Darstellungsmodus"
+
+msgid "Displays services, events, or packages from the CANITY API."
+msgstr "Zeigt Services, Events oder Pakete aus der CANITY API."
+
+msgid "Duration"
+msgstr "Dauer"
+
+msgid "Embed detail view on the website"
+msgstr "Detailansicht auf der Website einbinden"
+
+msgid "Enter a new token here to replace the current one. Leave blank to keep the stored token."
+msgstr "Trage hier einen neuen Token ein, um den aktuell verwendeten zu ersetzen. Leer lassen, um den gespeicherten Token beizubehalten."
+
+msgid "Events"
+msgstr "Events"
+
+msgid "Expand inline"
+msgstr "Inline aufklappen"
+
+msgid "External (canity.de)"
+msgstr "Extern (canity.de)"
+
+msgid "Feb."
+msgstr "Feb."
+
+msgid "February"
+msgstr "Februar"
+
+msgid "Free"
+msgstr "Kostenlos"
+
+msgid "Free cancellation available"
+msgstr "Kostenfreie Stornierung möglich"
+
+msgid "Free cancellation deadline"
+msgstr "Bis wann kann kostenfrei storniert werden"
+
+msgid "Friday"
+msgstr "Freitag"
+
+msgid "Global (settings)"
+msgstr "Global (Einstellungen)"
+
+msgid "Go to event"
+msgstr "Zum Event"
+
+msgid "Go to service"
+msgstr "Zum Service"
+
+msgid "Invalid resource ID."
+msgstr "Ungültige Ressourcen-ID."
+
+msgid "Jan."
+msgstr "Jan."
+
+msgid "January"
+msgstr "Januar"
+
+msgid "Jul."
+msgstr "Jul."
+
+msgid "July"
+msgstr "Juli"
+
+msgid "Jun."
+msgstr "Jun."
+
+msgid "June"
+msgstr "Juni"
+
+msgid "Limit:"
+msgstr "Limit:"
+
+msgid "Linked business"
+msgstr "Verknüpftes Business"
+
+msgid "Loading…"
+msgstr "Laden…"
+
+msgid "Location"
+msgstr "Ort"
+
+msgid "Mar."
+msgstr "Mär."
+
+msgid "March"
+msgstr "März"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "Monday"
+msgstr "Montag"
+
+msgid "No entries found."
+msgstr "Keine Einträge gefunden."
+
+msgid "Note"
+msgstr "Notiz"
+
+msgid "Nov."
+msgstr "Nov."
+
+msgid "November"
+msgstr "November"
+
+msgid "Oct."
+msgstr "Okt."
+
+msgid "October"
+msgstr "Oktober"
+
+msgid "Off: click opens the detail page on canity.de. On: details are shown locally; the booking button still links to canity.de."
+msgstr "Aus: Klick öffnet die Detailseite auf canity.de. An: Details werden lokal angezeigt; der Buchungsbutton verlinkt weiterhin auf canity.de."
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Online link"
+msgstr "Online-Link"
+
+msgid "Packages"
+msgstr "Pakete"
+
+msgid "Partially visible and not editable for security reasons"
+msgstr "Aus Sicherheitsgründen nur teilweise sichtbar und nicht bearbeitbar"
+
+msgid "Partner API token"
+msgstr "Partner API Token"
+
+msgid "Place on the detail page for the \"Dedicated page\" mode. On the frontend, details appear when visitors follow a link from a CANITY list. Select this page under Settings → CANITY as the detail page."
+msgstr "Für den Modus „Eigene Seite“ auf der Detailseite platzieren. Im Frontend werden Details angezeigt, wenn Besucher von einer CANITY-Liste hierher verlinkt werden. Unter Einstellungen → CANITY diese Seite als Detailseite auswählen."
+
+msgid "Please enter a CANITY Partner API token."
+msgstr "Bitte trage einen CANITY Partner API Token ein."
+
+msgid "Please enter your CANITY Partner API token in the settings first."
+msgstr "Bitte trage zuerst deinen CANITY Partner API Token in den Einstellungen ein."
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Price (incl. VAT)"
+msgstr "Preis (inkl. MwSt.)"
+
+msgid "Redeem package flexibly"
+msgstr "Paket flexibel einlösen"
+
+msgid "Responsible"
+msgstr "Verantwortlich"
+
+msgid "Saturday"
+msgstr "Samstag"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Sep."
+msgstr "Sep."
+
+msgid "September"
+msgstr "September"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Set new token"
+msgstr "Neuen Token setzen"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Shows the detail view of a service, event, or package when linked from a CANITY list."
+msgstr "Zeigt die Detailansicht eines Services, Events oder Pakets an, wenn von einer CANITY-Liste verlinkt."
+
+msgid "Start date"
+msgstr "Startdatum"
+
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgid "Terms & Conditions"
+msgstr "AGB"
+
+msgid "The CANITY API did not return a profile URL for this business."
+msgstr "CANITY API hat keine Profil-URL für dieses Business geliefert."
+
+msgid "The CANITY API response could not be read."
+msgstr "Antwort der CANITY API konnte nicht gelesen werden."
+
+msgid "The CANITY API returned status %d."
+msgstr "CANITY API hat Status %d geliefert."
+
+msgid "The CANITY API token does not have all required permissions (scopes)."
+msgstr "CANITY API Token hat nicht alle erforderlichen Berechtigungen (Scopes)."
+
+msgid "The CANITY API token does not have permission for this request."
+msgstr "CANITY API Token hat keine Berechtigung für diese Anfrage."
+
+msgid "The CANITY API token is invalid or expired."
+msgstr "CANITY API Token ist ungültig oder abgelaufen."
+
+msgid "The CANITY cache was cleared."
+msgstr "Der CANITY-Cache wurde geleert."
+
+msgid "The full token is stored and cannot be shown again for security reasons."
+msgstr "Der vollständige Token ist gespeichert und kann aus Sicherheitsgründen nicht erneut angezeigt werden."
+
+msgid "The token is stored in plain text in the WordPress database (standard for API plugins). Only administrators with \"manage_options\" can change it; it is included in backups. Only a shortened prefix is shown in the admin UI."
+msgstr "Der Token wird in der WordPress-Datenbank im Klartext gespeichert (Standard für API-Plugins). Nur Administratoren mit „Einstellungen verwalten“ können ihn ändern; in Backups ist er enthalten. In der Oberfläche wird nur ein gekürztes Präfix angezeigt."
+
+msgid "These offers can be booked with the package."
+msgstr "Diese Angebote sind mit dem Paket buchbar."
+
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgid "Time"
+msgstr "Uhrzeit"
+
+msgid "Token is valid, but the business is not publicly available right now (e.g. draft, suspended, or ended subscription)."
+msgstr "Token gültig, aber das Business ist derzeit nicht öffentlich abrufbar (z. B. Entwurf, Sperre oder beendetes Abo)."
+
+msgid "Too many requests. Please try again in a minute."
+msgstr "Zu viele Anfragen. Bitte versuche es in einer Minute erneut."
+
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgid "Units"
+msgstr "Einheiten"
+
+msgid "Unknown resource."
+msgstr "Unbekannte Ressource."
+
+msgid "Use CANITY design (CSS)"
+msgstr "CANITY-Design (CSS) verwenden"
+
+msgid "Valid for"
+msgstr "Gültig für"
+
+msgid "Validity"
+msgstr "Gültigkeit"
+
+msgid "View terms"
+msgstr "AGB anzeigen"
+
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgid "You can redeem your package when booking the corresponding appointment. It is available under \"Payment method\"."
+msgstr "Du kannst dein Paket bei der entsprechenden Terminbuchung einlösen. Es steht dir im Bereich „Zahlungsart“ zur Auswahl."
+
+msgid "You do not have permission for this action."
+msgstr "Du hast keine Berechtigung für diese Aktion."
+
+msgid "booking"
+msgstr "buchung"
+
+msgid "canity"
+msgstr "canity"
+
+msgid "detail"
+msgstr "detail"
+
+msgid "free"
+msgstr "kostenlos"
+
+msgid "minutes"
+msgstr "Minuten"
+
+msgid "no"
+msgstr "nein"
+
+msgid "show all dates"
+msgstr "alle Termine anzeigen"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "— Select page —"
+msgstr "— Seite wählen —"
+
+msgid "%d date"
+msgid_plural "%d dates"
+msgstr[0] "%d Termin"
+msgstr[1] "%d Termine"
+
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d Monat"
+msgstr[1] "%d Monate"
+
+msgid "%d unit"
+msgid_plural "%d units"
+msgstr[0] "%d Einheit"
+msgstr[1] "%d Einheiten"

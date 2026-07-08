@@ -1,0 +1,1106 @@
+/*
+ * Canity Plugin Styles
+ * Selectors are namespaced with .canity- to avoid theme collisions.
+ */
+
+@font-face {
+	font-display: swap;
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/inter-latin-400.woff2') format('woff2');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/inter-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 600;
+	src: url('../fonts/inter-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: Inter;
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/inter-latin-700.woff2') format('woff2');
+}
+
+.canity-grid,
+.canity-list,
+.canity-detail,
+.canity-modal,
+.canity-modal__panel,
+.canity-inline-detail {
+	--canity-font-family: Inter, sans-serif;
+	--canity-primary: #026BC7;
+	--canity-primary-light: #EAF1FF;
+	--canity-success: #10B981;
+	--canity-success-hover: #047857;
+	--canity-online: #6CA2FF;
+	--canity-text-primary: #20242B;
+	--canity-text-secondary: #667085;
+	--canity-text-quaternary: #9CA6BC;
+	--canity-border: #DEE0E7;
+	--canity-card-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.10);
+	font-family: var(--canity-font-family);
+}
+
+.canity-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 1.5rem;
+	margin: 0 0 1rem 0;
+	padding: 0;
+	list-style: none;
+}
+
+.canity-list__vat-note {
+	margin-top: 24px;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	color: var(--canity-text-secondary);
+}
+
+.canity-grid--packages {
+	gap: 1rem;
+}
+
+.canity-card {
+	position: relative;
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: var(--canity-card-shadow);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	color: var(--canity-text-primary);
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.canity-card--linked,
+.canity-card--triggerable {
+	cursor: pointer;
+}
+
+/*
+ * Full-card click: decorative layers pass clicks through to the stretch
+ * target. The link/button only wraps the title; ::before covers the card.
+ */
+.canity-card--linked > *,
+.canity-card--triggerable > * {
+	pointer-events: none;
+}
+
+.canity-card--linked .canity-card__link,
+.canity-card--triggerable .canity-card__trigger {
+	pointer-events: auto;
+}
+
+/*
+ * Stretched link: the <a> only wraps the title text, and ::before
+ * stretches its click area across the entire card. The card itself
+ * stays a <div> (wpautop-safe, see open_card() in PHP) while remaining
+ * fully clickable — including inside Gutenberg's "Shortcode" block.
+ */
+.canity-card__link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+
+.canity-card__link::before,
+.canity-card__trigger::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+.canity-card__link:hover,
+.canity-card__link:focus {
+	text-decoration: none;
+}
+
+.canity-card__link:focus,
+.canity-card__link:focus-visible,
+.canity-card__trigger:focus,
+.canity-card__trigger:focus-visible {
+	outline: none;
+}
+
+.canity-card__link:focus-visible::before,
+.canity-card__trigger:focus-visible::before {
+	outline: none;
+}
+
+.canity-card__trigger {
+	appearance: none;
+	background: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	color: inherit;
+	text-align: inherit;
+	cursor: pointer;
+	width: 100%;
+	display: block;
+}
+
+.canity-grid__item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+/* Inline mode wraps cards in grid__item; stretch card to match row height */
+.canity-grid--inline .canity-grid__item > .canity-card {
+	flex: 1;
+}
+
+.canity-grid--inline .canity-inline-detail:not([hidden]) {
+	grid-column: 1 / -1;
+}
+
+.canity-inline-detail {
+	position: relative;
+	width: min(720px, 100%);
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: var(--canity-card-shadow);
+	overflow: hidden;
+}
+
+.canity-inline-detail[hidden] {
+	display: none !important;
+}
+
+/* wpautop inserts empty <p> between block elements inside Gutenberg output */
+.canity-inline-detail > p:empty,
+.canity-inline-detail__content > p:empty {
+	display: none;
+	margin: 0;
+	padding: 0;
+}
+
+.canity-inline-detail__content {
+	position: relative;
+}
+
+.canity-inline-detail__close,
+.canity-modal__close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 3;
+	width: 36px;
+	height: 36px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.9);
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.canity-inline-detail__close:hover,
+.canity-inline-detail__close:focus,
+.canity-modal__close:hover,
+.canity-modal__close:focus {
+	background: #fff;
+}
+
+.canity-inline-detail__close:focus-visible,
+.canity-modal__close:focus-visible {
+	outline: none;
+}
+
+/* Detail view */
+.canity-detail {
+	color: var(--canity-text-primary);
+}
+
+.canity-detail__hero {
+	position: relative;
+	padding: 8px;
+}
+
+.canity-detail__hero-image {
+	display: block;
+	width: 100%;
+	max-height: 280px;
+	object-fit: cover;
+	background: var(--canity-primary-light);
+}
+
+.canity-detail__date {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	width: 48px;
+	height: 48px;
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(1px);
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	line-height: 1;
+}
+
+.canity-detail__date-day {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.canity-detail__date-month {
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.canity-detail__online {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--canity-online);
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.canity-detail__body {
+	padding: 32px 32px 0 32px;
+}
+
+.canity-detail__title {
+	font-size: 36px;
+    font-weight: 700;
+	margin: 0 0 4px;
+	padding-bottom: 8px;
+}
+
+.canity-detail__lead {
+	margin: 0 0 12px;
+	color: var(--canity-text-secondary);
+}
+
+.canity-detail__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 16px;
+	margin-bottom: 16px;
+}
+
+.canity-detail__meta-item {
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.canity-detail__description {
+	font-size: 14px;
+	line-height: 1.6;
+	color: var(--canity-text-primary);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.canity-detail__description p:first-child {
+	margin: 0;
+}
+
+.canity-detail__description p:last-child {
+	margin-bottom: 0;
+}
+
+.canity-detail__terms {
+	font-size: 14px;
+	line-height: 1.6;
+	color: var(--canity-text-primary);
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.canity-detail__terms-trigger {
+	margin-top: 16px;
+}
+
+.canity-detail__terms-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	padding: 0 16px;
+	border: 1px solid var(--canity-border);
+	border-radius: 8px;
+	background: #fff;
+	color: var(--canity-text-primary);
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.canity-detail__terms-button:hover {
+	background: #fafafa;
+	border-color: var(--canity-border);
+	color: var(--canity-text-primary);
+}
+
+.canity-detail__terms-source[hidden] {
+	display: none !important;
+}
+
+.canity-detail__terms p:first-child {
+	margin: 0;
+}
+
+.canity-detail__terms p:last-child {
+	margin-bottom: 0;
+}
+
+.canity-detail__dates,
+.canity-detail__address,
+.canity-detail__categories,
+.canity-detail__hint {
+	margin-bottom: 16px;
+}
+
+.canity-detail__dates-list {
+	margin: 8px 0 0;
+	padding-left: 1.2rem;
+}
+
+.canity-detail__gallery {
+	display: flex;
+	gap: 8px;
+	overflow-x: auto;
+	margin-bottom: 16px;
+	padding-bottom: 4px;
+}
+
+.canity-detail__gallery-image {
+	width: 120px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 8px;
+	flex-shrink: 0;
+}
+
+.canity-detail__cta-wrap {
+	padding: 0 32px 32px;
+}
+
+.canity-detail__section-title {
+	margin: 0 0 12px;
+	font-size: 18px;
+	line-height: 26px;
+	font-weight: 700;
+	color: var(--canity-text-primary);
+}
+
+.canity-detail__field-label,
+.canity-detail__price-label,
+.canity-detail__duration-label,
+.canity-detail__units-label,
+.canity-detail__validity-label {
+	font-size: 12px;
+	line-height: 18px;
+	color: var(--canity-text-secondary);
+}
+
+.canity-detail__field-value {
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	color: var(--canity-text-primary);
+}
+
+.canity-detail__price-value,
+.canity-detail__duration-value,
+.canity-detail__units-value,
+.canity-detail__validity-value {
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 600;
+	color: var(--canity-text-primary);
+}
+
+.canity-detail__price-text,
+.canity-detail__duration-text,
+.canity-detail__units-text,
+.canity-detail__validity-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.canity-detail__icon-badge {
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--canity-border);
+	border-radius: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--canity-text-primary);
+	flex-shrink: 0;
+}
+
+.canity-detail--events,
+.canity-detail--services {
+	display: flex;
+	flex-direction: column;
+	background: #fff;
+}
+
+.canity-detail--events .canity-detail__hero,
+.canity-detail--services .canity-detail__hero {
+	padding: 0;
+}
+
+.canity-detail--events .canity-detail__hero-image,
+.canity-detail--services .canity-detail__hero-image {
+	width: 100%;
+	max-height: none;
+	height: 280px;
+	object-fit: cover;
+}
+
+.canity-detail--events .canity-detail__body,
+.canity-detail--services .canity-detail__body {
+	position: relative;
+	z-index: 1;
+	margin-top: -24px;
+	background: #fff;
+	border-radius: 24px 24px 0 0;
+}
+
+.canity-detail--events .canity-detail__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 8px;
+}
+
+.canity-detail--events .canity-detail__datetime {
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--canity-text-secondary);
+}
+
+.canity-detail--events .canity-detail__price,
+.canity-detail--services .canity-detail__duration,
+.canity-detail--services .canity-detail__price,
+.canity-detail--packages .canity-detail__units,
+.canity-detail--packages .canity-detail__price,
+.canity-detail--packages .canity-detail__validity {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-shrink: 0;
+}
+
+.canity-detail--events .canity-detail__section,
+.canity-detail--services .canity-detail__section,
+.canity-detail--packages .canity-detail__section {
+	padding: 16px 0;
+	margin-bottom: 0;
+	border-top: 1px solid var(--canity-border);
+}
+
+.canity-detail--events .canity-detail__schedule {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+.canity-detail--events .canity-detail__schedule-col {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.canity-detail--events .canity-detail__schedule-col + .canity-detail__schedule-col {
+	border-left: 1px solid var(--canity-border);
+	padding-left: 16px;
+}
+
+.canity-detail--events .canity-detail__field,
+.canity-detail--services .canity-detail__field {
+	display: flex;
+	flex-direction: column;
+}
+
+.canity-detail--services .canity-detail__field {
+	margin-bottom: 12px;
+}
+
+.canity-detail--services .canity-detail__field:last-child {
+	margin-bottom: 0;
+}
+
+.canity-detail--events .canity-detail__section > .canity-detail__field {
+	margin-bottom: 12px;
+}
+
+.canity-detail--events .canity-detail__section > .canity-detail__field:last-child {
+	margin-bottom: 0;
+}
+
+.canity-detail--events .canity-detail__trainer {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding-top: 4px;
+}
+
+.canity-detail--events .canity-detail__trainer-avatar {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	flex-shrink: 0;
+	object-fit: cover;
+}
+
+.canity-detail--events .canity-detail__trainer-avatar--initial {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: #7c3aed;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.canity-detail--events .canity-detail__trainer-name {
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 600;
+	color: var(--canity-text-primary);
+}
+
+.canity-detail--events .canity-detail__field-link,
+.canity-detail--services .canity-detail__field-link,
+.canity-detail--packages .canity-detail__field-link {
+	text-decoration: none;
+	color: var(--canity-primary);
+}
+
+.canity-detail--events .canity-detail__field-link:hover,
+.canity-detail--events .canity-detail__field-link:focus,
+.canity-detail--services .canity-detail__field-link:hover,
+.canity-detail--services .canity-detail__field-link:focus,
+.canity-detail--packages .canity-detail__field-link:hover,
+.canity-detail--packages .canity-detail__field-link:focus {
+	text-decoration: underline;
+}
+
+.canity-detail--events .canity-detail__additional-dates {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.canity-detail--events .canity-detail__additional-date {
+	display: flex;
+	flex-direction: column;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	color: var(--canity-text-primary);
+}
+
+.canity-detail--events .canity-detail__additional-date-time {
+	font-weight: 400;
+	color: var(--canity-text-secondary);
+}
+
+.canity-detail--events .canity-detail__additional-dates-more {
+	margin-top: 8px;
+}
+
+.canity-detail--events .canity-detail__additional-dates-toggle {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--canity-primary);
+	cursor: pointer;
+	list-style: none;
+}
+
+.canity-detail--events .canity-detail__additional-dates-toggle:hover {
+	text-decoration: underline;
+}
+
+
+.canity-detail--events .canity-detail__additional-dates-toggle::-webkit-details-marker {
+	display: none;
+}
+
+.canity-detail--events .canity-detail__additional-dates-more[open] .canity-detail__additional-dates-toggle {
+	display: none;
+}
+
+.canity-detail--events .canity-detail__hint,
+.canity-detail--services .canity-detail__hint {
+	margin-bottom: 0px;
+	font-size: 13px;
+	color: var(--canity-text-secondary);
+}
+
+.canity-detail--events .canity-detail__tags,
+.canity-detail--services .canity-detail__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.canity-detail--events .canity-detail__tag,
+.canity-detail--services .canity-detail__tag {
+	display: inline-flex;
+	align-items: center;
+	min-height: 28px;
+	padding: 2px 12px;
+	border: 1px solid var(--canity-border);
+	border-radius: 999px;
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: 500;
+	color: var(--canity-text-primary);
+}
+
+.canity-detail--events .canity-detail__gallery {
+	margin-top: 16px;
+	padding-top: 16px;
+	border-top: 1px solid var(--canity-border);
+}
+
+.canity-detail--services .canity-detail__meta-row,
+.canity-detail--packages .canity-detail__meta-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 24px;
+	margin-bottom: 16px;
+}
+
+.canity-detail--packages {
+	display: flex;
+	flex-direction: column;
+}
+
+.canity-detail--packages .canity-detail__body {
+	flex: 1;
+}
+
+.canity-detail--packages .canity-detail__icon-circle {
+	margin-bottom: 12px;
+}
+
+.canity-detail--events .canity-detail__cta,
+.canity-detail--services .canity-detail__cta,
+.canity-detail--packages .canity-detail__cta {
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.canity-detail--packages .canity-detail__section-text {
+	margin: 0 0 12px;
+	font-size: 13px;
+	line-height: 1.6;
+	color: var(--canity-text-secondary);
+}
+
+.canity-detail--packages .canity-detail__section-text:last-child {
+	margin-bottom: 0;
+}
+
+.canity-detail--packages .canity-detail__offer-list {
+	margin: 0;
+	padding-left: 1.2rem;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--canity-text-primary);
+	line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+	.canity-detail__body {
+		padding: 16px 16px 0 16px;
+	}
+
+	.canity-detail__cta-wrap {
+		padding: 0 16px 16px;
+	}
+
+	.canity-detail--events .canity-detail__header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.canity-detail--events .canity-detail__schedule {
+		grid-template-columns: 1fr;
+	}
+
+	.canity-detail--events .canity-detail__schedule-col + .canity-detail__schedule-col {
+		border-left: 0;
+		padding-left: 0;
+		border-top: 1px solid var(--canity-border);
+		padding-top: 16px;
+	}
+}
+
+.canity-detail__cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 48px;
+	padding: 12px 16px;
+	border: 1px solid var(--canity-success);
+	border-radius: 8px;
+	background: var(--canity-success);
+	color: #fff !important;
+	text-decoration: none !important;
+	font-weight: 600;
+	font-size: 18px;
+	box-shadow: 0 1px 2px rgba(10, 13, 18, 0.05);
+}
+
+.canity-detail__cta:hover {
+	background: var(--canity-success-hover);
+	border-color: var(--canity-success-hover);
+	color: #fff;
+}
+
+.canity-detail__loading {
+	padding: 16px;
+	margin: 0;
+}
+
+/* Modal */
+.canity-sr-only {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+body.canity-modal-open,
+body.canity-terms-modal-open {
+	overflow: hidden;
+}
+
+.canity-modal[hidden] {
+	display: none !important;
+}
+
+.canity-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+}
+
+.canity-modal__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.canity-modal__panel {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	width: min(700px, 100%);
+	max-height: min(90vh, 1000px);
+	overflow: hidden;
+	background: #fff;
+	border-radius: 16px;
+	box-shadow: var(--canity-card-shadow);
+}
+
+.canity-modal__panel:focus,
+.canity-modal__panel:focus-visible {
+	outline: none;
+}
+
+.canity-modal__content {
+	overflow-y: auto;
+	flex: 1;
+	min-height: 0;
+}
+
+.canity-modal__content .canity-detail__cta-wrap {
+	padding-bottom: 20px;
+}
+
+.canity-terms-modal {
+	z-index: 100001;
+}
+
+.canity-terms-modal__content {
+	padding: 24px 20px 20px;
+}
+
+.canity-terms-modal__title {
+	margin: 0 0 16px;
+	padding-right: 40px;
+	font-size: 1.25rem;
+	line-height: 1.3;
+	color: var(--canity-text-primary);
+}
+
+.canity-terms-modal__body {
+	margin: 0;
+}
+
+/* Service + Event hero */
+.canity-card--service,
+.canity-card--event {
+	min-height: 297px;
+}
+
+.canity-card__hero {
+	position: relative;
+	padding: 8px;
+	border-radius: 8px;
+}
+
+.canity-card__hero-image {
+	display: block;
+	width: 100%;
+	height: 140px;
+	object-fit: cover;
+	border-radius: 8px;
+	background: var(--canity-primary-light);
+}
+
+.canity-card__date {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	width: 48px;
+	height: 48px;
+	background: rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(1px);
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	line-height: 1;
+}
+
+.canity-card__date--range {
+	width: auto;
+	height: auto;
+	min-height: 48px;
+	flex-direction: row;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px;
+}
+
+.canity-card__date-part {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+}
+
+.canity-card__date-separator {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--canity-text-primary);
+	line-height: 1;
+}
+
+.canity-card__date-day {
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--canity-text-primary);
+}
+
+.canity-card__date-month {
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: var(--canity-text-primary);
+}
+
+.canity-card__online {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 16px 16px 0;
+	color: var(--canity-online);
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.canity-card__online + .canity-card__title-block {
+	padding-top: 0px;
+}
+
+.canity-card__title-block {
+	padding: 16px;
+	flex-grow: 1;
+}
+
+.canity-card__title {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--canity-text-primary);
+}
+
+.canity-card__title-text,
+.canity-card__subtitle {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.canity-card__subtitle {
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: 300;
+	color: var(--canity-text-secondary);
+}
+
+.canity-card__section {
+	border-top: 1px solid var(--canity-border);
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	min-height: 68px;
+	box-sizing: border-box;
+}
+
+.canity-card__info-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+}
+
+.canity-card__info-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.canity-card__info-text {
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: 600;
+	color: var(--canity-text-primary);
+}
+
+.canity-card__icon-badge {
+	width: 24px;
+	height: 24px;
+	border: 1px solid var(--canity-border);
+	border-radius: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--canity-text-primary);
+	flex-shrink: 0;
+}
+
+/* Package card */
+.canity-card--package {
+	padding: 16px;
+	gap: 16px;
+	min-height: 0;
+}
+
+.canity-card--package .canity-card__title-block {
+	padding: 0;
+	flex-grow: 0;
+}
+
+.canity-card--package .canity-card__title {
+	font-size: 15px;
+}
+
+.canity-card--package .canity-card__subtitle {
+	margin-top: 2px;
+}
+
+.canity-card__icon-circle,
+.canity-detail--packages .canity-detail__icon-circle {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--canity-primary);
+	color: #fff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.canity-card__price {
+	font-size: 22px;
+	font-weight: 600;
+	color: var(--canity-primary);
+	margin-top: 4px;
+}
+
+.canity-card__price-mark {
+	color: var(--canity-text-quaternary);
+}
+
+/* Empty + error states */
+.canity-empty,
+.canity-error {
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	font-size: 0.95rem;
+}
+
+.canity-empty {
+	background: #f3f4f6;
+	color: #4b5563;
+}
+
+.canity-error {
+	background: #fef2f2;
+	color: #991b1b;
+	border: 1px solid #fecaca;
+}

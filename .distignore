@@ -1,0 +1,26 @@
+# Repo root (not deployed when using BUILD_DIR=canity).
+/.wordpress-org
+/.git
+/.github
+/README.md
+/.distignore
+/.gitignore
+/.DS_Store
+Thumbs.db
+*.zip
+
+# Plugin dev / tooling (paths relative to BUILD_DIR when set).
+/node_modules
+/vendor
+/tests
+/bin
+composer.json
+composer.lock
+package.json
+package-lock.json
+Gruntfile.js
+webpack.config.js
+phpunit.xml
+phpunit.xml.dist
+.editorconfig
+.gitattributes
