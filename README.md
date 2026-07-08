@@ -81,7 +81,7 @@ Under **Einstellungen → CANITY**, the detail view can be embedded locally. The
 
 ### Local CANITY backend (`wp-config.php`)
 
-The plugin uses production URLs by default (`https://canity.de`). For local development against a CANITY backend on `localhost`, add two lines to your **WordPress installation's `wp-config.php`** — **not** the plugin repo.
+The plugin uses production URLs by default. For local development against a backend on `localhost`, add two lines to your **WordPress installation's `wp-config.php`** — **not** the plugin repo.
 
 **Where is the file?**
 
@@ -112,16 +112,8 @@ Alternatively in LocalWP: select the site → **Database** tab → **Open site s
 Insert these lines **before** `/* That's all, stop editing! Happy publishing. */`:
 
 ```php
-// CANITY plugin: local API
-define( 'CANITY_API_BASE', 'http://localhost:53000' );
-define( 'CANITY_PUBLIC_BASE', 'http://localhost:54201' );
-```
-
-Without these entries, the plugin talks to `https://canity.de`. For staging, use instead:
-
-```php
-define( 'CANITY_API_BASE', 'https://dev.canity.de/api' );
-define( 'CANITY_PUBLIC_BASE', 'https://dev.canity.de' );
+define( 'CANITY_API_BASE', '<local-url>' );
+define( 'CANITY_PUBLIC_BASE', '<local-url>' );
 ```
 
 ### Flush cache
