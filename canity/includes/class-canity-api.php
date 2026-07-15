@@ -323,12 +323,12 @@ class Canity_API {
 	}
 
 	public static function get_business_slug() {
-		$options = get_option( Canity_Settings::OPTION_NAME, [] );
+		$options = get_option( Canity_Settings::CREDENTIALS_OPTION, [] );
 		return isset( $options['business_slug'] ) ? trim( (string) $options['business_slug'] ) : '';
 	}
 
 	public static function get_api_token() {
-		$options = get_option( Canity_Settings::OPTION_NAME, [] );
+		$options = get_option( Canity_Settings::CREDENTIALS_OPTION, [] );
 		return isset( $options['api_token'] ) ? trim( (string) $options['api_token'] ) : '';
 	}
 
