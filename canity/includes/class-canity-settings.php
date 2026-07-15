@@ -10,16 +10,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Canity_Settings {
 
-	const OPTION_GROUP = 'canity_settings';
-	const OPTION_NAME  = 'canity_options';
-	const PAGE_SLUG    = 'canity';
+	const PAGE_SLUG = 'canity';
+
+	const CREDENTIALS_GROUP  = 'canity_credentials';
+	const CREDENTIALS_OPTION = 'canity_credentials';
+
+	const DISPLAY_GROUP  = 'canity_display';
+	const DISPLAY_OPTION = 'canity_display';
+
+	const LEGACY_OPTION     = 'canity_options';
+	const DB_VERSION_OPTION = 'canity_db_version';
+	const DB_VERSION        = 2;
 
 	public static function init() {
+		self::maybe_migrate();
 		add_action( 'admin_menu', [ __CLASS__, 'register_page' ] );
 		add_action( 'admin_init', [ __CLASS__, 'register_settings' ] );
-		add_action( 'update_option_' . self::OPTION_NAME, [ 'Canity_API', 'flush_cache' ] );
+		add_action( 'update_option_' . self::CREDENTIALS_OPTION, [ 'Canity_API', 'flush_cache' ] );
 		add_action( 'admin_post_canity_flush_cache', [ __CLASS__, 'handle_flush_cache' ] );
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_admin_assets' ] );
+	}
+
+	/**
+	 * One-time migration: split the legacy `canity_options` into
+	 * separate credentials and display options. Idempotent; guarded
+	 * by DB_VERSION_OPTION so it runs at most once per install.
+	 */
+	public static function maybe_migrate() {
+		$version = (int) get_option( self::DB_VERSION_OPTION, 0 );
+		if ( $version >= self::DB_VERSION ) {
+			return;
+		}
+
+		$legacy = get_option( self::LEGACY_OPTION, null );
+		if ( is_array( $legacy ) ) {
+			$credentials = [
+				'api_token'     => isset( $legacy['api_token'] ) ? (string) $legacy['api_token'] : '',
+				'token_prefix'  => isset( $legacy['token_prefix'] ) ? (string) $legacy['token_prefix'] : '',
+				'business_slug' => isset( $legacy['business_slug'] ) ? (string) $legacy['business_slug'] : '',
+				'business_name' => isset( $legacy['business_name'] ) ? (string) $legacy['business_name'] : '',
+			];
+
+			$display = [
+				'enqueue_css'    => array_key_exists( 'enqueue_css', $legacy ) ? ! empty( $legacy['enqueue_css'] ) : true,
+				'embed_detail'   => ! empty( $legacy['embed_detail'] ),
+				'detail_mode'    => isset( $legacy['detail_mode'] ) ? (string) $legacy['detail_mode'] : 'modal',
+				'detail_page_id' => isset( $legacy['detail_page_id'] ) ? max( 0, (int) $legacy['detail_page_id'] ) : 0,
+			];
+
+			update_option( self::CREDENTIALS_OPTION, $credentials );
+			update_option( self::DISPLAY_OPTION, $display );
+			delete_option( self::LEGACY_OPTION );
+		}
+
+		update_option( self::DB_VERSION_OPTION, self::DB_VERSION );
 	}
 
 	public static function enqueue_admin_assets( $hook ) {
@@ -61,16 +105,27 @@ class Canity_Settings {
 
 	public static function register_settings() {
 		register_setting(
-			self::OPTION_GROUP,
-			self::OPTION_NAME,
+			self::CREDENTIALS_GROUP,
+			self::CREDENTIALS_OPTION,
 			[
 				'type'              => 'array',
-				'sanitize_callback' => [ __CLASS__, 'sanitize' ],
+				'sanitize_callback' => [ __CLASS__, 'sanitize_credentials' ],
 				'default'           => [
-					'api_token'      => '',
-					'token_prefix'   => '',
-					'business_slug'  => '',
-					'business_name'  => '',
+					'api_token'     => '',
+					'token_prefix'  => '',
+					'business_slug' => '',
+					'business_name' => '',
+				],
+			]
+		);
+
+		register_setting(
+			self::DISPLAY_GROUP,
+			self::DISPLAY_OPTION,
+			[
+				'type'              => 'array',
+				'sanitize_callback' => [ __CLASS__, 'sanitize_display' ],
+				'default'           => [
 					'enqueue_css'    => true,
 					'embed_detail'   => false,
 					'detail_mode'    => 'modal',
@@ -86,14 +141,14 @@ class Canity_Settings {
 				echo '<p>' . esc_html__( 'Connect your WordPress site to your CANITY business using a Partner API token.', 'canity' ) . '</p>';
 				echo '<p class="description">' . esc_html__( 'The token is stored in plain text in the WordPress database (standard for API plugins). Only administrators with "manage_options" can change it; it is included in backups. Only a shortened prefix is shown in the admin UI.', 'canity' ) . '</p>';
 			},
-			self::PAGE_SLUG
+			self::CREDENTIALS_OPTION
 		);
 
 		add_settings_field(
 			'api_token',
 			__( 'API connection', 'canity' ),
 			[ __CLASS__, 'render_api_token_field' ],
-			self::PAGE_SLUG,
+			self::CREDENTIALS_OPTION,
 			'canity_main'
 		);
 
@@ -103,14 +158,14 @@ class Canity_Settings {
 			static function () {
 				echo '<p>' . esc_html__( 'Control whether the bundled CANITY design is loaded on your website.', 'canity' ) . '</p>';
 			},
-			self::PAGE_SLUG
+			self::DISPLAY_OPTION
 		);
 
 		add_settings_field(
 			'enqueue_css',
 			__( 'CANITY design', 'canity' ),
 			[ __CLASS__, 'render_enqueue_css_field' ],
-			self::PAGE_SLUG,
+			self::DISPLAY_OPTION,
 			'canity_appearance'
 		);
 
@@ -118,7 +173,7 @@ class Canity_Settings {
 			'embed_detail',
 			__( 'Detail view', 'canity' ),
 			[ __CLASS__, 'render_detail_settings_field' ],
-			self::PAGE_SLUG,
+			self::DISPLAY_OPTION,
 			'canity_appearance'
 		);
 	}
@@ -128,12 +183,12 @@ class Canity_Settings {
 	const DETAIL_OVERRIDES = [ 'external', 'modal', 'page', 'inline' ];
 
 	public static function is_detail_embedded() {
-		$options = get_option( self::OPTION_NAME, [] );
+		$options = get_option( self::DISPLAY_OPTION, [] );
 		return is_array( $options ) && ! empty( $options['embed_detail'] );
 	}
 
 	public static function get_detail_mode() {
-		$options = get_option( self::OPTION_NAME, [] );
+		$options = get_option( self::DISPLAY_OPTION, [] );
 		$mode    = is_array( $options ) && isset( $options['detail_mode'] )
 			? (string) $options['detail_mode']
 			: 'modal';
@@ -142,7 +197,7 @@ class Canity_Settings {
 	}
 
 	public static function get_detail_page_id() {
-		$options = get_option( self::OPTION_NAME, [] );
+		$options = get_option( self::DISPLAY_OPTION, [] );
 		return is_array( $options ) && isset( $options['detail_page_id'] )
 			? max( 0, (int) $options['detail_page_id'] )
 			: 0;
@@ -178,7 +233,7 @@ class Canity_Settings {
 		$embedded      = self::is_detail_embedded();
 		$mode          = self::get_detail_mode();
 		$detail_page   = self::get_detail_page_id();
-		$option_name   = self::OPTION_NAME;
+		$option_name   = self::DISPLAY_OPTION;
 		$page_mode_cls = 'page' === $mode ? '' : ' hidden';
 		$mode_cls      = $embedded ? '' : ' hidden';
 
@@ -226,7 +281,7 @@ class Canity_Settings {
 	}
 
 	public static function is_css_enabled() {
-		$options = get_option( self::OPTION_NAME, [] );
+		$options = get_option( self::DISPLAY_OPTION, [] );
 		if ( ! is_array( $options ) || ! array_key_exists( 'enqueue_css', $options ) ) {
 			return true;
 		}
@@ -239,7 +294,7 @@ class Canity_Settings {
 
 		printf(
 			'<label for="canity_enqueue_css"><input type="checkbox" id="canity_enqueue_css" name="%1$s[enqueue_css]" value="1" %2$s /> %3$s</label>',
-			esc_attr( self::OPTION_NAME ),
+			esc_attr( self::DISPLAY_OPTION ),
 			checked( $enabled, true, false ),
 			esc_html__( 'Use CANITY design (CSS)', 'canity' )
 		);
@@ -247,7 +302,7 @@ class Canity_Settings {
 	}
 
 	public static function render_api_token_field() {
-		$options       = get_option( self::OPTION_NAME, [] );
+		$options       = get_option( self::CREDENTIALS_OPTION, [] );
 		$has_token     = ! empty( $options['api_token'] );
 		$business_slug = isset( $options['business_slug'] ) ? (string) $options['business_slug'] : '';
 		$business_name = isset( $options['business_name'] ) ? (string) $options['business_name'] : '';
@@ -296,7 +351,7 @@ class Canity_Settings {
 
 		printf(
 			'<div class="canity-settings-token__row"><input type="password" id="canity_api_token" name="%1$s[api_token]" value="" class="regular-text" autocomplete="off" placeholder="cnty_sk_…" />',
-			esc_attr( self::OPTION_NAME )
+			esc_attr( self::CREDENTIALS_OPTION )
 		);
 		submit_button( __( 'Save', 'canity' ), 'primary', 'submit', false );
 		echo '</div>';
@@ -343,20 +398,20 @@ class Canity_Settings {
 		exit;
 	}
 
-	public static function sanitize( $input ) {
-		$existing = get_option( self::OPTION_NAME, [] );
+	public static function sanitize_credentials( $input ) {
+		$existing = get_option( self::CREDENTIALS_OPTION, [] );
 		$existing = is_array( $existing ) ? $existing : [];
 
-		$new_token = isset( $input['api_token'] )
+		$submitted_token = isset( $input['api_token'] )
 			? trim( sanitize_text_field( wp_unslash( $input['api_token'] ) ) )
 			: '';
-		$token     = '' !== $new_token
-			? $new_token
+		$token           = '' !== $submitted_token
+			? $submitted_token
 			: ( isset( $existing['api_token'] ) ? trim( (string) $existing['api_token'] ) : '' );
 
 		if ( '' === $token ) {
 			add_settings_error(
-				self::OPTION_GROUP,
+				self::CREDENTIALS_GROUP,
 				'canity_no_api_token',
 				__( 'Please enter a CANITY Partner API token.', 'canity' ),
 				'error'
@@ -364,12 +419,13 @@ class Canity_Settings {
 			return $existing;
 		}
 
-		$token_changed = '' !== $new_token;
+		$existing_token = isset( $existing['api_token'] ) ? trim( (string) $existing['api_token'] ) : '';
+		$token_changed  = '' !== $submitted_token && $submitted_token !== $existing_token;
 		if ( $token_changed ) {
 			$validation = Canity_API::validate_token( $token );
 			if ( is_wp_error( $validation ) ) {
 				add_settings_error(
-					self::OPTION_GROUP,
+					self::CREDENTIALS_GROUP,
 					$validation->get_error_code(),
 					$validation->get_error_message(),
 					'error'
@@ -384,6 +440,15 @@ class Canity_Settings {
 			$business_name = isset( $existing['business_name'] ) ? (string) $existing['business_name'] : '';
 		}
 
+		return [
+			'api_token'     => $token,
+			'token_prefix'  => Canity_API::format_token_prefix( $token ),
+			'business_slug' => $business_slug,
+			'business_name' => $business_name,
+		];
+	}
+
+	public static function sanitize_display( $input ) {
 		$detail_mode = isset( $input['detail_mode'] )
 			? sanitize_text_field( wp_unslash( $input['detail_mode'] ) )
 			: 'modal';
@@ -400,10 +465,6 @@ class Canity_Settings {
 		}
 
 		return [
-			'api_token'      => $token,
-			'token_prefix'   => Canity_API::format_token_prefix( $token ),
-			'business_slug'  => $business_slug,
-			'business_name'  => $business_name,
 			'enqueue_css'    => ! empty( $input['enqueue_css'] ),
 			'embed_detail'   => ! empty( $input['embed_detail'] ),
 			'detail_mode'    => $detail_mode,
@@ -431,8 +492,15 @@ class Canity_Settings {
 			?>
 			<form action="options.php" method="post">
 				<?php
-				settings_fields( self::OPTION_GROUP );
-				do_settings_sections( self::PAGE_SLUG );
+				settings_fields( self::CREDENTIALS_GROUP );
+				do_settings_sections( self::CREDENTIALS_OPTION );
+				// The submit button for this form is rendered inside render_api_token_field().
+				?>
+			</form>
+			<form action="options.php" method="post">
+				<?php
+				settings_fields( self::DISPLAY_GROUP );
+				do_settings_sections( self::DISPLAY_OPTION );
 				submit_button( __( 'Save', 'canity' ) );
 				?>
 			</form>

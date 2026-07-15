@@ -14,5 +14,8 @@ require_once plugin_dir_path( __FILE__ ) . 'includes/class-canity-api.php';
 
 Canity_API::flush_cache();
 
+delete_option( 'canity_credentials' );
+delete_option( 'canity_display' );
+delete_option( 'canity_db_version' );
 delete_option( 'canity_options' );
 delete_option( 'canity_cache_version' );
