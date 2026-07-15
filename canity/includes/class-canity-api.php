@@ -138,6 +138,54 @@ class Canity_API {
 	}
 
 	/**
+	 * Resolves a single item for public, unauthenticated detail requests.
+	 *
+	 * Only items present in the partner's public catalog list are exposed, so
+	 * the public REST endpoint cannot be used to proxy arbitrary items by ID.
+	 *
+	 * @param string $resource One of: services, events, packages.
+	 * @param string $id       Resource UUID.
+	 * @return array<string, mixed>|WP_Error
+	 */
+	public static function resolve_public_item( $resource, $id ) {
+		$id = trim( (string) $id );
+		if ( '' === $id ) {
+			return new WP_Error( 'canity_invalid_id', __( 'Invalid resource ID.', 'canity' ) );
+		}
+
+		if ( ! self::is_public_id( $resource, $id ) ) {
+			return new WP_Error(
+				'canity_not_found',
+				__( 'The requested item is not available.', 'canity' ),
+				[ 'status' => 404 ]
+			);
+		}
+
+		return self::resolve_item( $resource, $id );
+	}
+
+	/**
+	 * Checks whether an ID belongs to the partner's publicly listed catalog.
+	 *
+	 * @param string $resource One of: services, events, packages.
+	 * @param string $id       Resource UUID.
+	 */
+	private static function is_public_id( $resource, $id ) {
+		$items = self::fetch( $resource );
+		if ( is_wp_error( $items ) ) {
+			return false;
+		}
+
+		foreach ( $items as $item ) {
+			if ( is_array( $item ) && isset( $item['id'] ) && (string) $item['id'] === $id ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Fetches the partner business profile (cached).
 	 *
 	 * @return array<string, mixed>|WP_Error

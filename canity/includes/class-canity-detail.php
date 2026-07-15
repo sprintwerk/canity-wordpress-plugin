@@ -57,7 +57,7 @@ class Canity_Detail {
 	 * @return string|WP_Error
 	 */
 	public static function render( $type, $id ) {
-		$item = Canity_API::resolve_item( $type, $id );
+		$item = Canity_API::resolve_public_item( $type, $id );
 		if ( is_wp_error( $item ) ) {
 			return $item;
 		}

@@ -28,7 +28,9 @@ class Canity_REST {
 			[
 				'methods'             => 'GET',
 				'callback'            => [ __CLASS__, 'get_detail' ],
-				// Public read (data is already on the frontend); throttled per IP below.
+				// Intentionally public: serves only items from the partner's public
+				// catalog list (verified in get_detail), i.e. data the site already
+				// renders on the frontend. Throttled per IP below to limit API amplification.
 				'permission_callback' => [ __CLASS__, 'public_permission' ],
 				'args'                => [
 					'type' => [
@@ -87,7 +89,7 @@ class Canity_REST {
 		$type = (string) $request->get_param( 'type' );
 		$id   = (string) $request->get_param( 'id' );
 
-		$item = Canity_API::resolve_item( $type, $id );
+		$item = Canity_API::resolve_public_item( $type, $id );
 		if ( is_wp_error( $item ) ) {
 			return new WP_Error(
 				$item->get_error_code(),
