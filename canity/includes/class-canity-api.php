@@ -26,6 +26,22 @@ class Canity_API {
 	 * @return array<int, array<string, mixed>>|WP_Error
 	 */
 	public static function fetch( $resource, $limit = 0 ) {
+		$list = self::fetch_list( $resource, $limit );
+		return is_wp_error( $list ) ? $list : $list['items'];
+	}
+
+	/**
+	 * Fetches a resource list plus the number of Stammkunden-only offerings hidden from it.
+	 *
+	 * The Partner API always reads as an anonymous visitor, so CUSTOMERS_ONLY services
+	 * and events are never part of the list; `hidden_customers_only` counts them for
+	 * the teaser tile (0 for packages, which have no such visibility).
+	 *
+	 * @param string $resource One of: services, events, packages.
+	 * @param int    $limit    Optional max items to request from the API (0 = up to LIST_TAKE).
+	 * @return array{items: array<int, array<string, mixed>>, hidden_customers_only: int}|WP_Error
+	 */
+	public static function fetch_list( $resource, $limit = 0 ) {
 		$api_token = self::get_api_token();
 		if ( '' === $api_token ) {
 			return new WP_Error(
@@ -44,7 +60,7 @@ class Canity_API {
 
 		$cache_key = self::cache_key( $api_token, $resource, $limit );
 		$cached    = get_transient( $cache_key );
-		if ( false !== $cached ) {
+		if ( self::is_list_payload( $cached ) ) {
 			return $cached;
 		}
 
@@ -58,10 +74,15 @@ class Canity_API {
 			return new WP_Error( 'canity_invalid_json', __( 'The CANITY API response could not be read.', 'canity' ) );
 		}
 
-		$items = $data['data'];
-		set_transient( $cache_key, $items, self::CACHE_TTL );
+		$list = [
+			'items'                 => $data['data'],
+			'hidden_customers_only' => isset( $data['meta']['totalHiddenCustomersOnly'] )
+				? max( 0, (int) $data['meta']['totalHiddenCustomersOnly'] )
+				: 0,
+		];
+		set_transient( $cache_key, $list, self::CACHE_TTL );
 
-		return $items;
+		return $list;
 	}
 
 	/**
@@ -327,6 +348,11 @@ class Canity_API {
 		return isset( $options['business_slug'] ) ? trim( (string) $options['business_slug'] ) : '';
 	}
 
+	public static function get_business_name() {
+		$options = get_option( Canity_Settings::CREDENTIALS_OPTION, [] );
+		return isset( $options['business_name'] ) ? trim( (string) $options['business_name'] ) : '';
+	}
+
 	public static function get_api_token() {
 		$options = get_option( Canity_Settings::CREDENTIALS_OPTION, [] );
 		return isset( $options['api_token'] ) ? trim( (string) $options['api_token'] ) : '';
@@ -521,18 +547,27 @@ class Canity_API {
 		$batches = [];
 
 		$full_list = get_transient( self::cache_key( $api_token, $resource, 0 ) );
-		if ( false !== $full_list && is_array( $full_list ) ) {
-			$batches[] = $full_list;
+		if ( self::is_list_payload( $full_list ) ) {
+			$batches[] = $full_list['items'];
 		}
 
 		for ( $limit = 1; $limit <= 50; $limit++ ) {
 			$cached = get_transient( self::cache_key( $api_token, $resource, $limit ) );
-			if ( false !== $cached && is_array( $cached ) ) {
-				$batches[] = $cached;
+			if ( self::is_list_payload( $cached ) ) {
+				$batches[] = $cached['items'];
 			}
 		}
 
 		return $batches;
+	}
+
+	/**
+	 * Whether a cached list transient has the current shape (older caches held the bare item array).
+	 *
+	 * @param mixed $cached
+	 */
+	private static function is_list_payload( $cached ) {
+		return is_array( $cached ) && isset( $cached['items'] ) && is_array( $cached['items'] );
 	}
 
 	private static function business_cache_key( $api_token ) {

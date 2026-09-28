@@ -91,15 +91,18 @@ class Canity_Shortcodes {
 
 		$limit = max( 0, (int) $atts['limit'] );
 
-		$items = Canity_API::fetch( $resource, $limit );
-		if ( is_wp_error( $items ) ) {
+		$list = Canity_API::fetch_list( $resource, $limit );
+		if ( is_wp_error( $list ) ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				return '<div class="canity-error">' . esc_html( $items->get_error_message() ) . '</div>';
+				return '<div class="canity-error">' . esc_html( $list->get_error_message() ) . '</div>';
 			}
 			return '';
 		}
 
-		if ( empty( $items ) ) {
+		$items        = $list['items'];
+		$hidden_count = $list['hidden_customers_only'];
+
+		if ( empty( $items ) && 0 === $hidden_count ) {
 			return '<div class="canity-empty">' . esc_html__( 'No entries found.', 'canity' ) . '</div>';
 		}
 
@@ -118,6 +121,9 @@ class Canity_Shortcodes {
 		echo '<div class="' . esc_attr( $grid_class ) . '" data-canity-detail-mode="' . esc_attr( $detail_mode ) . '">';
 		foreach ( $items as $item ) {
 			self::render_card( $resource, (array) $item, $detail_mode );
+		}
+		if ( $hidden_count > 0 ) {
+			self::render_customers_only_tile( $resource, $hidden_count, ! empty( $items ) );
 		}
 		echo '</div>';
 		if ( Canity_Item_Helpers::list_has_vatable_prices( $items ) ) {
@@ -166,6 +172,60 @@ class Canity_Shortcodes {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Teaser tile for Stammkunden-only offerings the Partner API leaves out of the list.
+	 *
+	 * Website visitors are never signed in to CANITY, so the tile links to the business's
+	 * full services/events list on CANITY, where Stammkund:innen can sign in and see those offerings.
+	 *
+	 * @param string $resource             services|events
+	 * @param int    $count                Number of hidden offerings.
+	 * @param bool   $has_public_offerings False when the tile stands alone, so it drops "more".
+	 */
+	private static function render_customers_only_tile( $resource, $count, $has_public_offerings ) {
+		$business_name = Canity_API::get_business_name();
+		$business_slug = Canity_API::get_business_slug();
+
+		if ( $has_public_offerings ) {
+			$label = '' !== $business_name
+				/* translators: 1: number of offerings, 2: business name */
+				? _n( '%1$d more offering is exclusive to regular customers of %2$s.', '%1$d more offerings are exclusive to regular customers of %2$s.', $count, 'canity' )
+				/* translators: %d: number of offerings */
+				: _n( '%d more offering is exclusive to regular customers.', '%d more offerings are exclusive to regular customers.', $count, 'canity' );
+		} else {
+			$label = '' !== $business_name
+				/* translators: 1: number of offerings, 2: business name */
+				? _n( '%1$d offering is exclusive to regular customers of %2$s.', '%1$d offerings are exclusive to regular customers of %2$s.', $count, 'canity' )
+				/* translators: %d: number of offerings */
+				: _n( '%d offering is exclusive to regular customers.', '%d offerings are exclusive to regular customers.', $count, 'canity' );
+		}
+		$text = sprintf( $label, (int) $count, $business_name );
+
+		$list_paths  = [
+			'services' => '/s',
+			'events'   => '/e',
+		];
+		$profile_url = '' !== $business_slug && isset( $list_paths[ $resource ] )
+			? untrailingslashit( CANITY_PUBLIC_BASE ) . '/b/' . rawurlencode( $business_slug ) . $list_paths[ $resource ]
+			: '';
+
+		// A <div> wrapper keeps wpautop from wrapping the tile in <p>; the link stretches over it like on the cards.
+		echo '<div class="canity-customers-only-tile' . ( '' !== $profile_url ? ' canity-customers-only-tile--linked' : '' ) . '">';
+		echo '<div class="canity-customers-only-tile__circle">';
+		Canity_Helpers::echo_svg_icon( Canity_Helpers::icon_lock() );
+		echo '</div>';
+		if ( '' !== $profile_url ) {
+			printf(
+				'<div class="canity-customers-only-tile__text"><a class="canity-customers-only-tile__link" href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a></div>',
+				esc_url( $profile_url ),
+				esc_html( $text )
+			);
+		} else {
+			echo '<div class="canity-customers-only-tile__text">' . esc_html( $text ) . '</div>';
+		}
+		echo '</div>';
 	}
 
 	private static function render_service_card( array $item, $resource, $detail_mode ) {

@@ -4,7 +4,7 @@ Tags: canity
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ This plugin connects your WordPress site to your CANITY account and displays ser
 * Gutenberg block "CANITY List" as a convenient wrapper
 * Optional embedded detail view (modal, dedicated WordPress page, inline) with deep links (`#canity-detail/{type}/{id}`)
 * Booking button always links to canity.de
+* Services and events reserved for regular customers (Stammkund:innen) are not listed; instead, a teaser tile at the end of the list shows how many there are and links to your CANITY profile
 * Responses are cached for 15 minutes (Transients API), reducing API load
 * Custom CSS with `.canity-` namespacing, loaded only where needed; can be disabled under *Settings → CANITY* (enabled by default)
 
@@ -182,6 +183,9 @@ Placeholder images (`assets/img/placeholder_service.png`, `assets/img/placeholde
 Copyright CANITY. Included with permission for use in this plugin.
 
 == Changelog ==
+
+= 1.1.0 =
+* New: Services and events reserved for regular customers (Stammkund:innen) are now teased with a tile at the end of the list, showing how many there are. Clicking it opens the full services or events page on canity.de, where regular customers can sign in.
 
 = 1.0.1 =
 * Removed bundled translation files (.po, .mo, JSON). Translations are provided via translate.wordpress.org.
