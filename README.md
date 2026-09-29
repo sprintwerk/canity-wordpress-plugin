@@ -56,10 +56,8 @@ Then activate the **CANITY** plugin under **Plugins** in WP Admin.
 ### Option 2: ZIP upload (simulates production install)
 
 ```bash
-cd /Users/<your-username>/repo/canity-wordpress-plugin-playground
-zip -r canity.zip canity \
-  -x "canity/.DS_Store" \
-  -x "canity/**/.DS_Store"
+cd /Users/<your-username>/repo/canity-wordpress-plugin
+zip -r canity.zip canity -x "canity/.DS_Store" -x "canity/**/.DS_Store"
 ```
 
 Then in WP Admin: **Plugins → Add New → Upload Plugin** → select `canity.zip` → install → activate.
