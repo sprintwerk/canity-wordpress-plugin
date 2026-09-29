@@ -4,7 +4,7 @@ Tags: canity
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -183,6 +183,10 @@ Placeholder images (`assets/img/placeholder_service.png`, `assets/img/placeholde
 Copyright CANITY. Included with permission for use in this plugin.
 
 == Changelog ==
+
+= 1.2.0 =
+* Show the cancellation processing fee on service and event detail pages.
+* Reword the cancellation policy so it no longer promises a free cancellation when a fee applies.
 
 = 1.1.0 =
 * New: Services and events reserved for regular customers (Stammkund:innen) are now teased with a tile at the end of the list, showing how many there are. Clicking it opens the full services or events page on canity.de, where regular customers can sign in.
