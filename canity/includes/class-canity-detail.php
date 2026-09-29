@@ -480,11 +480,14 @@ class Canity_Detail {
 		echo '<h3 class="canity-detail__section-title">' . esc_html( $section_title ) . '</h3>';
 
 		if ( $has_cancellation ) {
-			$enabled = ! empty( $item['cancellationEnabled'] );
-			$days    = isset( $item['cancellationDays'] ) ? $item['cancellationDays'] : null;
+			$enabled  = ! empty( $item['cancellationEnabled'] );
+			$days     = isset( $item['cancellationDays'] ) ? $item['cancellationDays'] : null;
+			$fee_cents = isset( $item['cancellationFeeCents'] ) ? (int) $item['cancellationFeeCents'] : 0;
 
+			// Deliberately fee-neutral: one label that is correct whether or not a processing fee
+			// applies. Past the deadline a booking can still be cancelled — only the refund is gone.
 			self::render_schedule_field(
-				__( 'Free cancellation available', 'canity' ),
+				__( 'Cancellation with refund possible', 'canity' ),
 				$enabled
 					? __( 'yes', 'canity' )
 					: __( 'no', 'canity' )
@@ -501,9 +504,22 @@ class Canity_Detail {
 			}
 
 			self::render_schedule_field(
-				__( 'Free cancellation deadline', 'canity' ),
+				__( 'Cancellation deadline', 'canity' ),
 				$deadline
 			);
+
+			// Only when the API reported one. Absent for a business without a fee, and also for a
+			// response cached in a transient before the field existed.
+			if ( $enabled && $fee_cents > 0 ) {
+				self::render_schedule_field(
+					__( 'Processing fee', 'canity' ),
+					sprintf(
+						/* translators: %s: formatted amount, e.g. 10,00 € */
+						__( '%s – withheld on cancellation', 'canity' ),
+						self::format_cancellation_fee( $fee_cents )
+					)
+				);
+			}
 		}
 
 		if ( '' !== $terms_html ) {
@@ -642,6 +658,21 @@ class Canity_Detail {
 		echo '<span class="canity-detail__field-label">' . esc_html( $label ) . '</span>';
 		echo '<span class="canity-detail__field-value">' . esc_html( $value ) . '</span>';
 		echo '</div>';
+	}
+
+	/**
+	 * German euro notation with fixed decimals: 1000 => "10,00 €". The space before the symbol is
+	 * non-breaking so the amount never wraps away from its €.
+	 *
+	 * Close to formatCancellationFeeEur in the web app, but not identical: number_format() also
+	 * groups thousands, so 100000 renders "1.000,00 €" here and "1000,00 €" there. This output is
+	 * the more correct German; the divergence only ever shows on a four-digit euro fee.
+	 *
+	 * @param int $cents Amount in cents.
+	 * @return string
+	 */
+	private static function format_cancellation_fee( $cents ) {
+		return number_format( $cents / 100, 2, ',', '.' ) . "\xc2\xa0€";
 	}
 
 	/**
