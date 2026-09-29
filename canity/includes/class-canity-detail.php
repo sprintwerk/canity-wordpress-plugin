@@ -662,8 +662,11 @@ class Canity_Detail {
 
 	/**
 	 * German euro notation with fixed decimals: 1000 => "10,00 €". The space before the symbol is
-	 * non-breaking so the amount never wraps away from its €. Mirrors formatCancellationFeeEur in
-	 * the web app.
+	 * non-breaking so the amount never wraps away from its €.
+	 *
+	 * Close to formatCancellationFeeEur in the web app, but not identical: number_format() also
+	 * groups thousands, so 100000 renders "1.000,00 €" here and "1000,00 €" there. This output is
+	 * the more correct German; the divergence only ever shows on a four-digit euro fee.
 	 *
 	 * @param int $cents Amount in cents.
 	 * @return string
