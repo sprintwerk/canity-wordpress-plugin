@@ -216,7 +216,7 @@ class Canity_Detail {
 		echo '<h3 class="canity-detail__section-title">' . esc_html__( 'Redeem package flexibly', 'canity' ) . '</h3>';
 		echo '<p class="canity-detail__section-text">';
 		echo esc_html__(
-			'You can redeem your package when booking the corresponding appointment. It is available under "Payment method".',
+			'You can redeem your package when booking a matching appointment. It is available under "Pakete & Mehrfachkarten".',
 			'canity'
 		);
 		echo '</p></section>';
