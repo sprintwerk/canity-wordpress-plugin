@@ -346,7 +346,7 @@ class Canity_Settings {
 			echo '<p class="description canity-settings-token__replace-hint">' . esc_html__( 'Enter a new token here to replace the current one. Leave blank to keep the stored token.', 'canity' ) . '</p>';
 		} else {
 			echo '<label class="canity-settings-token__replace-label" for="canity_api_token">' . esc_html__( 'Partner API token', 'canity' ) . '</label>';
-			echo '<p class="description canity-settings-token__replace-hint">' . esc_html__( 'Create the token in CANITY under My Business → Partner API. It is shown only once.', 'canity' ) . '</p>';
+			echo '<p class="description canity-settings-token__replace-hint">' . esc_html__( 'Create the token in CANITY under Mein Business → Integration → API-Tokens. It is shown only once.', 'canity' ) . '</p>';
 		}
 
 		printf(
