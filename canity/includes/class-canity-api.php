@@ -402,7 +402,7 @@ class Canity_API {
 		if ( 401 === $code ) {
 			return new WP_Error(
 				'canity_api_unauthorized',
-				__( 'The CANITY API token is invalid or expired.', 'canity' )
+				__( 'The CANITY API token is invalid or has been revoked.', 'canity' )
 			);
 		}
 		if ( 403 === $code ) {

@@ -1,14 +1,14 @@
 === CANITY ===
 Contributors: sprintwerk
-Tags: canity
+Tags: booking, appointments, events, dog training, shortcode
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Official CANITY WordPRess plugin to display services, events, and packages from the CANITY Partner API using a shortcode or Gutenberg block.
+Official CANITY WordPress plugin to display services, events, and packages from the CANITY Partner API using a shortcode or Gutenberg block.
 
 == Description ==
 
@@ -29,7 +29,7 @@ This plugin connects your WordPress site to your CANITY account and displays ser
 
 1. Upload the plugin to `wp-content/plugins/canity` or install it from the plugin directory.
 2. Activate the plugin.
-3. Under *Settings → CANITY*, enter and save your **Partner API token**. Create the token in CANITY under *My Business → Partner API* (shown only once).
+3. Under *Settings → CANITY*, enter and save your **Partner API token**. Create the token in CANITY under *Mein Business → Integration → API-Tokens* (shown only once).
 4. Add the shortcode or block to any page.
 
 == Usage ==
@@ -87,17 +87,17 @@ For **Dedicated page** mode, use the **"CANITY Detail"** block (or shortcode `[c
 
 = Caching =
 
-API responses are cached for 15 minutes. Under *Settings → CANITY*, use **Flush cache now** to clear the cache manually — useful when you want changes in CANITY to appear on your site immediately.
+API responses are cached for 15 minutes. Under *Settings → CANITY*, use **Clear cache now** to clear the cache manually — useful when you want changes in CANITY to appear on your site immediately.
 
 == FAQ ==
 
 = Where do I get the Partner API token, and what if I lose it? =
 
-Create the token in CANITY under *My Business → Partner API*. It is shown only once — copy it immediately. Enter it under *Settings → CANITY* in WordPress and save. If you lose the token, revoke it in CANITY, create a new one, and update the plugin settings.
+Create the token in CANITY under *Mein Business → Integration → API-Tokens*. It is shown only once — copy it immediately. Enter it under *Settings → CANITY* in WordPress and save. If you lose the token, revoke it in CANITY, create a new one, and update the plugin settings.
 
 = Why don't changes in CANITY show up on my site right away? =
 
-API responses are cached for 15 minutes to reduce load on the CANITY API. Use **Flush cache now** under *Settings → CANITY* to refresh the data immediately after you update offerings in CANITY.
+API responses are cached for 15 minutes to reduce load on the CANITY API. Use **Clear cache now** under *Settings → CANITY* to refresh the data immediately after you update offerings in CANITY.
 
 = Can visitors book directly on my WordPress site? =
 
@@ -183,6 +183,11 @@ Placeholder images (`assets/img/placeholder_service.png`, `assets/img/placeholde
 Copyright CANITY. Included with permission for use in this plugin.
 
 == Changelog ==
+
+= 1.2.1 =
+* Point the token hint to the current place in CANITY: Mein Business → Integration → API-Tokens.
+* Say "invalid or has been revoked" instead of "invalid or expired" when CANITY rejects the token.
+* Fix wording in the readme.
 
 = 1.2.0 =
 * Show the cancellation processing fee on service and event detail pages.

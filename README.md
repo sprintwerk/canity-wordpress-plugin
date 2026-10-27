@@ -64,7 +64,7 @@ Then in WP Admin: **Plugins → Add New → Upload Plugin** → select `canity.z
 
 ## Setup after installation
 
-1. Open **Einstellungen → CANITY**, enter your Partner API token, and save. Create the token in CANITY under *Mein Business → Partner API*.
+1. Open **Einstellungen → CANITY**, enter your Partner API token, and save. Create the token in CANITY under *Mein Business → Integration → API-Tokens*.
 2. Add the shortcode `[canity type="services"]`, `[canity type="events" limit="5"]`, or `[canity type="packages"]` to a page.
 3. Or add the **CANITY Liste** block in the block editor and choose content type and count.
 4. Optional: Enable the detail view under *Einstellungen → CANITY* (modal, dedicated page with `[canity_detail]`, or inline).
@@ -77,9 +77,9 @@ Under **Einstellungen → CANITY**, the detail view can be embedded locally. The
 
 ## During development
 
-### Flush cache
+### Clear cache
 
-API responses are cached for 15 minutes. Use **Cache jetzt leeren** under *Einstellungen → CANITY*, or temporarily lower the TTL in [canity/includes/class-canity-api.php](canity/includes/class-canity-api.php).
+API responses are cached for 15 minutes. Use **Clear cache now** under *Einstellungen → CANITY*, or temporarily lower the TTL in [canity/includes/class-canity-api.php](canity/includes/class-canity-api.php).
 
 ### View PHP errors
 
