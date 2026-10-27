@@ -1,6 +1,6 @@
 === CANITY ===
 Contributors: sprintwerk
-Tags: booking, appointments, events, dog training, shortcode
+Tags: canity
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
