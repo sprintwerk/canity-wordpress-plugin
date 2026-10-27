@@ -187,7 +187,7 @@ Copyright CANITY. Included with permission for use in this plugin.
 = 1.2.1 =
 * Point the token hint to the current place in CANITY: Mein Business → Integration → API-Tokens.
 * Say "invalid or has been revoked" instead of "invalid or expired" when CANITY rejects the token.
-* The package detail now says packages are redeemed under "Pakete & Mehrfachkarten" at booking, not under "Payment method".
+* The package detail now names the place where packages are redeemed at booking: "Zahlungsmethode" → "Paket einlösen".
 * Fix wording in the readme.
 
 = 1.2.0 =
